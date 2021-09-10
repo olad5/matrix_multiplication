@@ -1,40 +1,35 @@
 #!/usr/bin/python3
-# This is a python file to calculate the geometric mean of an arbitary number
-# of positive numbers
-import sys
-import logging
-logging.basicConfig(
-    level=logging.DEBUG, format="Line %(lineno)d - %(message)s",)
+# This is a python file to calculate the  multiplication of two matrices
 
 class Matrix_Multi:
     def __init__(self):
-        self.numbers = []
-        INPUT_FILES = ('matrix1.txt', 'matrix2.txt')
-        self.matrix_1 = self.read_input_file(INPUT_FILES[0])
-        self.matrix_2 = self.read_input_file(INPUT_FILES[1])
+        self.matrix_1 = self.read_input_file('matrix1.txt')
+        self.matrix_2 = self.read_input_file('matrix2.txt')
+        self.cal_multi(self.matrix_1, self.matrix_2)
 
     def read_input_file(self, file):
-        with open(file) as input1:
+        with open(file) as file:
             # gets the contents of files
-            content =  input1.readlines()
-            # separates them by ','
-            row1  = (content[0]).split(',')
-            row2  = (content[1]).split(',')
-            num_rows  = len(row1)
-            num_columns  = len(content)
+            content =  file.readlines()
+            matrix  = [ [int(num.strip()) for num in content[x].split(',')]  for x in  range(len(content))]
+            return matrix
 
-            # strips new line characters
-            matrix_values  = [x.strip() for x in row1+row2]
-            # save the matrix properties into a dictionary
-            props = {
-                "rows": num_rows,
-                "columns": num_columns,
-                "values": matrix_values,
-            }
+    def cal_multi(self, matrix_1, matrix_2):
+        if len(matrix_1[0]) != len(matrix_2):
+            print(" You can't multi these two matrices\n")
+            return
+        result = [[0 for x in range(len(matrix_2))] for y in
+                  range(len(matrix_1))]
+        # loop through rows of X
+        for i in range(len(matrix_1)):
+            # loop through columns of Y
+            for j in range(len(matrix_2[0])):
+                # loop through rows of Y
+                for k in range(len(matrix_2)):
+                   result[i][j] += matrix_1[i][k] * matrix_2[k][j]
 
-            return props
-
-
+        for row in result:
+            print(row)
 
 if __name__ == '__main__':
     m = Matrix_Multi()
