@@ -1,37 +1,39 @@
 #!/usr/bin/python3
 # This is a python file to calculate the geometric mean of an arbitary number
 # of positive numbers
-
+import sys
+import logging
+logging.basicConfig(
+    level=logging.DEBUG, format="Line %(lineno)d - %(message)s",)
 
 class Matrix_Multi:
     def __init__(self):
         self.numbers = []
-        # print('hello')
-        # self.read_input_file()
-        # self.cal_arit_mean()
-        # print()
-        for file in ('matrix1.txt', 'matrix2.txt'):
-            self.read_input_file(file)
+        INPUT_FILES = ('matrix1.txt', 'matrix2.txt')
+        self.matrix_1 = self.read_input_file(INPUT_FILES[0])
+        self.matrix_2 = self.read_input_file(INPUT_FILES[1])
 
     def read_input_file(self, file):
         with open(file) as input1:
-            matrix_1 =  input1.readlines()
-            for  line in matrix_1:
-                print(type( line ))
+            # gets the contents of files
+            content =  input1.readlines()
+            # separates them by ','
+            row1  = (content[0]).split(',')
+            row2  = (content[1]).split(',')
+            num_rows  = len(row1)
+            num_columns  = len(content)
 
-    def cal_arit_mean(self):
-        total = 0
-        for num in self.numbers:
-            total += num
-        self.avg = total / len(self.numbers)
-        print(f"The arithmetic mean is {self.avg}")
+            # strips new line characters
+            matrix_values  = [x.strip() for x in row1+row2]
+            # save the matrix properties into a dictionary
+            props = {
+                "rows": num_rows,
+                "columns": num_columns,
+                "values": matrix_values,
+            }
 
-    def cal_geo_mean(self):
-        product_numbers = 1
-        for num in self.numbers:
-            product_numbers *= num
-        self.geo_mean = product_numbers**(1/len(self.numbers))
-        print(f"The geometric mean is {self.geo_mean}")
+            return props
+
 
 
 if __name__ == '__main__':
