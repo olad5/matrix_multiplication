@@ -7,13 +7,14 @@ class Matrix_Multi:
     def __init__(self):
         self.numbers = []
         # print('hello')
-        self.read_input_file()
+        # self.read_input_file()
         # self.cal_arit_mean()
         # print()
-        # self.cal_geo_mean()
+        for file in ('matrix1.txt', 'matrix2.txt'):
+            self.read_input_file(file)
 
-    def read_input_file(self):
-        with open('matrices1.txt') as input1:
+    def read_input_file(self, file):
+        with open(file) as input1:
             matrix_1 =  input1.readlines()
             for  line in matrix_1:
                 print(type( line ))
